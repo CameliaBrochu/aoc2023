@@ -23,6 +23,28 @@ namespace utils{
         f.close();
         return input;
     }
+
+    inline std::vector<std::string> splitString(char sep, const std::string& s){
+        std::vector<std::string> sepString;
+
+        std::string part;
+        int count = 0;
+        for (char i : s) {
+            ++count;
+            if(i == sep){
+                sepString.push_back(part);
+                part = "";
+                continue;
+            }
+            part += i;
+
+            if(count == s.size()){
+                sepString.push_back(part);
+            }
+        }
+
+        return sepString;
+    }
 };
 
 
