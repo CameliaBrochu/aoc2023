@@ -16,6 +16,7 @@ namespace aoc{
 
     protected:
         virtual void part1() = 0;
+        virtual void part2() = 0;
 
         void loadInput(const std::string& filename){
             this->input = utils::parseFile(filename);
