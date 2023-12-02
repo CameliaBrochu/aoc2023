@@ -23,6 +23,8 @@ protected:
     void part1() override;
 
     void part2() override;
+private:
+    static std::vector<GameResult> parseGameResults(const std::vector<std::string>& rawResults);
 };
 
 
