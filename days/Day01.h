@@ -16,6 +16,8 @@ protected:
     void part1();
     void part2();
 private:
+    static void findFirstAndLastDigitsPosition(const std::string& input, size_t &first, size_t &last);
+
     static inline char convertSpelledDigit(std::string& spelledDigit){
         // This is cursed...
 

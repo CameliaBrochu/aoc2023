@@ -6,13 +6,13 @@
 
 void Day01::run() {
     this->loadInput("../input/01.txt");
-    //this->part1();
+    this->part1();
     this->part2();
 }
 
 void Day01::test() {
-    //this->loadInput("../input/01_test.txt");
-    //this->part1();
+    this->loadInput("../input/01_test.txt");
+    this->part1();
 
     this->loadInput("../input/01_2_test.txt");
     this->part2();
@@ -21,29 +21,10 @@ void Day01::test() {
 void Day01::part1() {
     int total = 0;
     for (auto currentInput : this->input) {
-        size_t front = 0;
-        size_t back = currentInput.size() - 1;
-        bool found = false;
+        size_t front;
+        size_t back;
 
-        while(!found){
-            if(front >= back){
-                found = true;
-            } else {
-
-                if(!std::isdigit(currentInput[front])){
-                    front++;
-                }
-
-
-                if(!std::isdigit(currentInput[back])){
-                    back--;
-                }
-
-                if(std::isdigit(currentInput[front]) && std::isdigit(currentInput[back])){
-                    found = true;
-                }
-            }
-        }
+        findFirstAndLastDigitsPosition(currentInput, front, back);
 
         char firstDigit = currentInput[front];
         char secondDigit = currentInput[back];
@@ -87,29 +68,10 @@ void Day01::part2() {
 
 
         // Handle digits
-        size_t front = 0;
-        size_t back = currentInput.size() - 1;
-        bool found = false;
+        size_t front;
+        size_t back;
 
-        while(!found){
-            if(front >= back){
-                found = true;
-            } else {
-
-                if(!std::isdigit(currentInput[front])){
-                    front++;
-                }
-
-
-                if(!std::isdigit(currentInput[back])){
-                    back--;
-                }
-
-                if(std::isdigit(currentInput[front]) && std::isdigit(currentInput[back])){
-                    found = true;
-                }
-            }
-        }
+        findFirstAndLastDigitsPosition(currentInput, front, back);
 
         char firstDigit;
         char secondDigit;
@@ -136,4 +98,33 @@ void Day01::part2() {
     }
 
     std::cout << "PART 2 : " << total << "\n";
+}
+
+void Day01::findFirstAndLastDigitsPosition(const std::string& input, size_t &first, size_t &last) {
+    size_t front = 0;
+    size_t back = input.size() - 1;
+    bool found = false;
+
+    while(!found){
+        if(front >= back){
+            found = true;
+        } else {
+
+            if(!std::isdigit(input[front])){
+                front++;
+            }
+
+
+            if(!std::isdigit(input[back])){
+                back--;
+            }
+
+            if(std::isdigit(input[front]) && std::isdigit(input[back])){
+                found = true;
+            }
+        }
+
+        first = front;
+        last = back;
+    }
 }
