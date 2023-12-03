@@ -1,10 +1,10 @@
 #include <iostream>
 
-#include "days/Day02.h"
+#include "days/Day03.h"
 
 int main(int argc, char* argv[]){
-    Day02 day02;
-    day02.run();
+    Day03 day03;
+    day03.run();
 
     return 1;
 }

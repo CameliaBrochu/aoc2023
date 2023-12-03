@@ -11,6 +11,17 @@
 #include <fstream>
 
 namespace utils{
+
+    struct Point {
+        Point(int i, int j){
+            x = i;
+            y = j;
+        }
+
+        int x;
+        int y;
+    };
+
     inline std::vector<std::string> parseFile(const std::string& filename){
         std::vector<std::string> input;
 
