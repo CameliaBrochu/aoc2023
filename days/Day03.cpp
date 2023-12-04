@@ -57,6 +57,8 @@ void Day03::part1() {
         delete startPoint;
     }
 
+    int gearRatios = 0;
+
     for (auto symbol: symbols) {
         // Look around symbol position
         for (int i = symbol.position.x - 1; i <= symbol.position.x + 1; ++i) {
@@ -65,10 +67,23 @@ void Day03::part1() {
                     for (auto number:numbers) {
                         if(number->start.y <= j && number->end.y >= j && number->start.x == i){
                             number->isPartNumber = true;
+                            symbol.adj.insert(number);
                         }
                     }
                 }
             }
+        }
+
+        if(symbol.symbol == '*' && symbol.adj.size() == 2){
+            int temp = 0;
+            for (auto adj: symbol.adj) {
+                if(temp == 0){
+                    temp = adj->number;
+                } else {
+                    temp = temp * adj->number;
+                }
+            }
+            gearRatios += temp;
         }
     }
 
@@ -82,8 +97,9 @@ void Day03::part1() {
     numbers.clear();
 
     std::cout << "total parts : " << total << "\n";
+    std::cout << "total gear ratio : " << gearRatios << "\n";
 }
 
 void Day03::part2() {
-
+    // included in part 1
 }

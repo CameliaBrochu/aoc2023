@@ -4,6 +4,7 @@
 #ifndef AOC2023_DAY03_H
 #define AOC2023_DAY03_H
 
+#include <set>
 #include "../core/Day.h"
 #include "../core/Utils.h"
 
@@ -23,6 +24,7 @@ class Day03: public aoc::Day {
 
         char symbol;
         utils::Point position;
+        std::set<Number*> adj = {};
     };
 
 public:
