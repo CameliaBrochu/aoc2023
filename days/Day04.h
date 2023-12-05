@@ -7,6 +7,12 @@
 #include "../core/Day.h"
 
 class Day04: public aoc::Day {
+
+    struct ScratchCard {
+        int count = 1;
+        int points = 0;
+    };
+
 public:
     void run() override;
 
