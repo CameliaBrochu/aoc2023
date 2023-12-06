@@ -30,9 +30,9 @@ void Day05::part1() {
         if(str != "seeds:"){
             if(first == 0){
                 first = std::stoll(str);
-            } else if(second == 0){
-                second = std::stoll(str);
             } else {
+                second = std::stoll(str);
+
                 SeedRange seedRange = SeedRange(first, second);
                 seeds.push_back(seedRange);
                 first = 0;
@@ -86,7 +86,7 @@ void Day05::part1() {
 
     std::vector<long long> locations = {};
     for (auto& seed: seeds) {
-        for (long long i = seed.start; i < seed.length; ++i) {
+        for (long long i = seed.start; i < seed.start+seed.length; ++i) {
             long long next = getNextFromMapping(i , &seedSoilMapping);
             next = getNextFromMapping(next, &soilToFertilizerMapping);
             next = getNextFromMapping(next, &fertilizerToWaterMapping);
