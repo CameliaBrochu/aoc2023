@@ -9,7 +9,6 @@ std::map<char,int> labels = {
         std::make_pair('A', 1),
         std::make_pair('K', 2),
         std::make_pair('Q', 3),
-        std::make_pair('J', 4),
         std::make_pair('T', 5),
         std::make_pair('9', 6),
         std::make_pair('8', 7),
@@ -19,6 +18,7 @@ std::map<char,int> labels = {
         std::make_pair('4', 11),
         std::make_pair('3', 12),
         std::make_pair('2', 13),
+        std::make_pair('J', 14),
 };
 
 struct Hand {
@@ -41,6 +41,10 @@ bool sortHands(const Hand& h1, const Hand& h2){
     }
 
     return false;
+}
+
+bool sortCardCount(const std::pair<char, int> p1,  const std::pair<char, int> p2){
+    return p1.second < p2.second;
 }
 
 void Day07::run() {
@@ -67,14 +71,24 @@ void Day07::part1() {
         std::vector<std::string> split = utils::splitString(' ', currentInput);
         Hand currentHand(split[0], std::stoi(split[1]));
         std::map<char,int> cardCount;
-        for (auto& card: currentHand.hand) {
 
-            auto it = cardCount.find(card);
-            if(it != cardCount.end()){
-                it->second++;
+        int nbrOfJokers = 0;
+        for (auto& card: currentHand.hand) {
+            if(card == 'J'){
+                nbrOfJokers++;
             } else {
-                cardCount.insert(std::make_pair(card, 1));
+                auto it = cardCount.find(card);
+                if(it != cardCount.end()){
+                    it->second++;
+                } else {
+                    cardCount.insert(std::make_pair(card, 1));
+                }
             }
+        }
+
+        if(!cardCount.empty()){
+            auto it = std::max_element(cardCount.begin(), cardCount.end(),sortCardCount);
+            it->second += nbrOfJokers;
         }
 
         switch (cardCount.size()) {
@@ -101,6 +115,7 @@ void Day07::part1() {
                 }
                 break;
             case 1:
+            case 0:
                 correctHandType = &fiveOfKind;
                 break;
         }
