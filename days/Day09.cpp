@@ -51,7 +51,7 @@ void Day09::part1() {
         std::vector<int> numbers = {};
 
         for (auto& n: numberStr) {
-            numbers.push_back(std::stoi(n));
+            numbers.insert(numbers.begin(),std::stoi(n));
         }
 
         extrapolatedValues.push_back(getExtrapolatedValue(numbers));
