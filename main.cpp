@@ -4,7 +4,7 @@
 
 int main(int argc, char* argv[]){
     Day08 day08;
-    day08.run();
+    day08.test();
 
     return 1;
 }

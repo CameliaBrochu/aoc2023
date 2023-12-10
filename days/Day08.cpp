@@ -4,25 +4,88 @@
 #include "Day08.h"
 #include <map>
 
-struct Node {
-    Node(const std::string& label, Node *right, Node *left) : label(label), right(right), left(left) {}
-    std::string label;
-    Node* right;
-    Node* left;
-};
-
 void Day08::run() {
     this->loadInput("../input/08.txt");
-    this->part1();
+    //this->part1();
+
+    this->part2();
 }
 
 void Day08::test() {
     this->loadInput("../input/08_test_02.txt");
-    this->part1();
+    //this->part1();
+
+    this->part2();
 }
 
 void Day08::part1() {
     std::string instructions = this->input[0];
+    std::map<std::string, Node> network = this->lookAtThisGraph();
+
+    int nbrOfSteps = 0;
+    Node currentNode = network.begin()->second;
+
+    while(currentNode.label != "ZZZ"){
+        for (auto& instruction: instructions) {
+            if(currentNode.label == "ZZZ"){
+                break;
+            }
+
+            nbrOfSteps++;
+            if(instruction == 'R'){
+                currentNode = *(currentNode.right);
+            } else if(instruction == 'L'){
+                currentNode = *(currentNode.left);
+            }
+        }
+    }
+
+
+    std::cout << "total steps : " << nbrOfSteps << "\n";
+}
+
+void Day08::part2() {
+    std::string instructions = this->input[0];
+    std::map<std::string, Node> network = this->lookAtThisGraph();
+
+    std::vector<Node> currentNodes = {};
+    for (const auto& pair: network) {
+        if(pair.second.label.substr(2,1) == "A"){
+            currentNodes.push_back(pair.second);
+        }
+    }
+
+    int nbrOfSteps = 0;
+    int endCount = 0;
+
+    while(endCount != currentNodes.size()){
+        for (auto& instruction: instructions) {
+            for (auto& currentNode :currentNodes) {
+                if(instruction == 'R'){
+                    currentNode = *(currentNode.right);
+                } else if(instruction == 'L'){
+                    currentNode = *(currentNode.left);
+                }
+            }
+
+            nbrOfSteps++;
+            endCount = 0;
+            for (const auto& currentNode :currentNodes) {
+                if(currentNode.label.substr(2,1) == "Z"){
+                    endCount++;
+                }
+            }
+
+            if(endCount == currentNodes.size()){
+                break;
+            }
+        }
+    }
+
+    std::cout << "total steps : " << nbrOfSteps << "\n";
+}
+
+std::map<std::string, Node> Day08::lookAtThisGraph() {
     std::map<std::string, Node> network = {};
 
     for (int i = 2; i < this->input.size(); ++i) {
@@ -55,28 +118,5 @@ void Day08::part1() {
         }
     }
 
-    int nbrOfSteps = 0;
-    Node currentNode = network.begin()->second;
-
-    while(currentNode.label != "ZZZ"){
-        for (auto& instruction: instructions) {
-            if(currentNode.label == "ZZZ"){
-                break;
-            }
-
-            nbrOfSteps++;
-            if(instruction == 'R'){
-                currentNode = *(currentNode.right);
-            } else if(instruction == 'L'){
-                currentNode = *(currentNode.left);
-            }
-        }
-    }
-
-
-    std::cout << "total steps : " << nbrOfSteps << "\n";
-}
-
-void Day08::part2() {
-
+    return network;
 }
